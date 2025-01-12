@@ -58,9 +58,13 @@
                 android:src="@drawable/recicler_view_frame"/>
 
             <com.example.joystickjhr.JoystickJhr
+                android:id="@+id/joystick"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                app:colorFirst="@color/red"
+                app:colorSecond="@color/black"
+                app:rellenoSize = "12"/>
 
 
         </FrameLayout>
