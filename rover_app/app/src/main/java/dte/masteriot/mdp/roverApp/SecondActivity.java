@@ -67,8 +67,7 @@ public class SecondActivity extends AppCompatActivity implements JSONParsing{
 
         //launching control activity
         Intent intent = new Intent(this, ThirdActivity.class);
-        //intent.putExtra(EXTRA_INFO_TO_THIRD_ACTIVITY_LINE,lineSelected);
-        //intent.putExtra(EXTRA_INFO_TO_THIRD_ACTIVITY_TRAJECTORY,trajectoryNumber);
+        intent.putExtra(EXTRA_INFO_ACTIVITY_USER_TOKEN,userToken);
         Log.d(SECOND_ACTIVITY_TAG,"Launching 3º activity");
         startActivity(intent);
     }
