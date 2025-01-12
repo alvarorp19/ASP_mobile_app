@@ -15,7 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import dte.masteriot.mdp.listofitems.R;
+import dte.masteriot.mdp.roverApp.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity  {
 
     //parameters to be sent to the second activity
 
-    final static String EXTRA_INFO_TO_THIRD_ACTIVITY_USER_TOKEN = "USERTOKEN";
+    final static String EXTRA_INFO_ACTIVITY_USER_TOKEN = "USERTOKEN";
 
     String userToken = "";
     String userRefreshToken = "";
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity  {
 
         //launching 3º activity
         Intent intent = new Intent(this, SecondActivity.class);
-        intent.putExtra(EXTRA_INFO_TO_THIRD_ACTIVITY_USER_TOKEN,userToken);
+        intent.putExtra(EXTRA_INFO_ACTIVITY_USER_TOKEN,userToken);
         Log.d(MAINACTIVITYTAG,"Launching 2º activity");
         startActivity(intent);
     }

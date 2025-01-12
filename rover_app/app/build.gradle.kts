@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "dte.masteriot.mdp.listofitems"
+    namespace = "dte.masteriot.mdp.roverApp"
     compileSdk = 34
 
     defaultConfig {
@@ -14,6 +14,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags += ""
+            }
+        }
     }
 
     buildTypes {
@@ -35,12 +40,19 @@ android {
     }
 
 
+
     packaging {
         resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         resources.excludes.add("META-INF/INDEX.LIST")
         resources.excludes.add("META-INF/io.netty.versions.properties")
     }
-    
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+            version = "3.22.1"
+        }
+    }
+
 }
 
 dependencies {
@@ -51,6 +63,10 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("com.google.android.gms:play-services-maps:19.0.0")
+    implementation(fileTree(mapOf(
+        "dir" to "C:/Users/arpcr/personal/master/ASP/rover_mobile_app_repo/ASP_mobile_app/rover_app/app/libs",
+        "include" to listOf("*.aar", "*.jar")
+    )))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
@@ -61,4 +77,6 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation(files("/libs/joystickjhr.arr"))
 }

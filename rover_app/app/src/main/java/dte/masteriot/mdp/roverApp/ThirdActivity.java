@@ -42,8 +42,6 @@ import java.util.concurrent.Executors;
 
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import dte.masteriot.mdp.listofitems.R;
-import dte.masteriot.mdp.listofitems.databinding.ActivityThirdBinding;
 
 
 public class ThirdActivity extends AppCompatActivity implements JSONParsing, OnMapReadyCallback, SensorEventListener {
@@ -68,7 +66,7 @@ public class ThirdActivity extends AppCompatActivity implements JSONParsing, OnM
 
     private ExecutorService es;
 
-    private ActivityThirdBinding binding;
+    //private ActivityThirdBinding binding;
 
     private GoogleMap mMap;
     Map<Integer, LatLng> markersMap = new HashMap<>();
@@ -88,175 +86,172 @@ public class ThirdActivity extends AppCompatActivity implements JSONParsing, OnM
     private static final int REQUEST_CODE_ACTIVITY_RECOGNITION = 1;
 
     // Define the handler that will receive the messages from the background thread that processes the HTML request:
-    Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            // message received from background thread: load complete (or failure)
-            String string_result;
-            super.handleMessage(msg);
-            Log.d(LOADWEB_THIRD_ACTIVITY_TAG, "Message received from background thread");
-
-            Bundle data = msg.getData();  // Obtén el Bundle asociado al Message
-
-            //All lines
-            if (data.containsKey(HANDLER_KEY_JSON)) {
-                if ((string_result = msg.getData().getString(HANDLER_KEY_JSON)) != null) {
-                    content = string_result;
-                    Log.d(LOADWEB_THIRD_ACTIVITY_TAG, "Contenido web recibido en el hilo secundario UI" + content);
-                    TrayectorycontentHasBeenRetrieved = true;
-                    //initializes reciclerView with trayectory info
-//                    generateListWithTrajectoryInfo();
+//    Handler handler = new Handler(Looper.getMainLooper()) {
+//        @Override
+//        public void handleMessage(@NonNull Message msg) {
+//            // message received from background thread: load complete (or failure)
+//            String string_result;
+//            super.handleMessage(msg);
+//            Log.d(LOADWEB_THIRD_ACTIVITY_TAG, "Message received from background thread");
 //
-//                    //getting maps info
-//                    getMarkersFromSelectedTrayectory();
+//            Bundle data = msg.getData();  // Obtén el Bundle asociado al Message
 //
-//                    //clearing all elements on the map
+//            //All lines
+//            if (data.containsKey(HANDLER_KEY_JSON)) {
+//                if ((string_result = msg.getData().getString(HANDLER_KEY_JSON)) != null) {
+//                    content = string_result;
+//                    Log.d(LOADWEB_THIRD_ACTIVITY_TAG, "Contenido web recibido en el hilo secundario UI" + content);
+//                    TrayectorycontentHasBeenRetrieved = true;
+//                    //initializes reciclerView with trayectory info
+////                    generateListWithTrajectoryInfo();
+////
+////                    //getting maps info
+////                    getMarkersFromSelectedTrayectory();
+////
+////                    //clearing all elements on the map
+////
+////                    mMap.clear();
+////
+////                    //setting markers on maps
+////                    putMarkersOnMaps();
 //
-//                    mMap.clear();
+//                    //setting trayectory on maps
 //
-//                    //setting markers on maps
-//                    putMarkersOnMaps();
-
-                    //setting trayectory on maps
-
-                    joinMarkersOnMaps();
-
-                    //running MQTT service
-
-                    //runMQTTservice();
-
-                }
-            }
-        }
-    };
+//                    joinMarkersOnMaps();
+//
+//                    //running MQTT service
+//
+//                    //runMQTTservice();
+//
+//                }
+//            }
+//        }
+//    };
 
     private Handler handler2 = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_third);
+        setContentView(R.layout.activity_third);
 
-        binding = ActivityThirdBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        ///binding = ActivityThirdBinding.inflate(getLayoutInflater());
+        //setContentView(binding.getRoot());
 
         //enabling step counter
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        StepSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-
-        //vibrator initialization
-        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+//        StepSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+//        stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+//
+//        //vibrator initialization
+//        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //cheking permissions
 
-        if( ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED){
-            //ask for permission
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACTIVITY_RECOGNITION},
-                    REQUEST_CODE_ACTIVITY_RECOGNITION);
-        }
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+//        if( ActivityCompat.checkSelfPermission(this,
+//                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED){
+//            //ask for permission
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{Manifest.permission.ACTIVITY_RECOGNITION},
+//                    REQUEST_CODE_ACTIVITY_RECOGNITION);
+//        }
+//
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
 
         // Get the trajectory selected
-        Intent inputIntent = getIntent();
-        lineSelected = inputIntent.getStringExtra(EXTRA_INFO_TO_THIRD_ACTIVITY_LINE);
-        trajectorySelected = inputIntent.getStringExtra(EXTRA_INFO_TO_THIRD_ACTIVITY_TRAJECTORY);
+        //Intent inputIntent = getIntent();
+//        lineSelected = inputIntent.getStringExtra(EXTRA_INFO_TO_THIRD_ACTIVITY_LINE);
+//        trajectorySelected = inputIntent.getStringExtra(EXTRA_INFO_TO_THIRD_ACTIVITY_TRAJECTORY);
 
-        Log.d(THIRD_ACTIVITY_TAG,"LINE: " + lineSelected + "Trajectory: " + trajectorySelected);
+//        Log.d(THIRD_ACTIVITY_TAG,"LINE: " + lineSelected + "Trajectory: " + trajectorySelected);
 
-        stopButton = findViewById(R.id.stopButton);
-        textNoConnection = findViewById(R.id.textNoConnection);
-
-        stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                //publishing on MQTT topic
-
-                Log.d(THIRD_ACTIVITY_TAG,"Stop requested button clicked");
-
-                if (Mqtt.MQTTclientIsConnected()){
-
-                    //Notifying user
-                    Toast.makeText(ThirdActivity.this, "SHAKE THE PHONE TO STOP THE BUS!!", Toast.LENGTH_SHORT).show();
-
-                    //registering callback for step counter
-                    stepCount = 0;
-                    StepSensorManager.registerListener(ThirdActivity.this,stepSensor,SensorManager.SENSOR_DELAY_NORMAL);
-
-
-                }else{
-
-
-                    try{
-                        //Mqtt.connectToBroker();
-
-                        //Notifying user
-                        Toast.makeText(ThirdActivity.this, "UNABLE TO REQUEST THE STOP NOW!!", Toast.LENGTH_SHORT).show();
-
-                        //disable step counter
-                        stepCount = 0;
-
-
-                    }catch (Exception e){
-                        Log.d(THIRD_ACTIVITY_TAG,"problem connecting with MQTT");
-                    }
-
-                }
-
-                //runMQTTservice();
-
-                //notifying user that neeeds to shake the phone in order to stop the bus
-            }
-        });
+//        stopButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                //publishing on MQTT topic
+//
+//                Log.d(THIRD_ACTIVITY_TAG,"Stop requested button clicked");
+//
+//                if (Mqtt.MQTTclientIsConnected()){
+//
+//                    //Notifying user
+//                    Toast.makeText(ThirdActivity.this, "SHAKE THE PHONE TO STOP THE BUS!!", Toast.LENGTH_SHORT).show();
+//
+//                    //registering callback for step counter
+//                    stepCount = 0;
+//                    StepSensorManager.registerListener(ThirdActivity.this,stepSensor,SensorManager.SENSOR_DELAY_NORMAL);
+//
+//
+//                }else{
+//
+//
+//                    try{
+//                        //Mqtt.connectToBroker();
+//
+//                        //Notifying user
+//                        Toast.makeText(ThirdActivity.this, "UNABLE TO REQUEST THE STOP NOW!!", Toast.LENGTH_SHORT).show();
+//
+//                        //disable step counter
+//                        stepCount = 0;
+//
+//
+//                    }catch (Exception e){
+//                        Log.d(THIRD_ACTIVITY_TAG,"problem connecting with MQTT");
+//                    }
+//
+//                }
+//
+//                //runMQTTservice();
+//
+//                //notifying user that neeeds to shake the phone in order to stop the bus
+//            }
+//        });
 
         //mounting URL
-        url_line_trajectory = url_line_trajectory + "/" + lineSelected + "/" + trajectorySelected;
-
-        //initializes the executor for background threads
-        es = Executors.newSingleThreadExecutor();
-
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-
-                Log.d(THIRD_ACTIVITY_TAG,"Updating reciclerView!!!");
-
-                // each 1 second
-                //requesting content from created URL through HTTP
-                loadSpecifictrayectory();
-                handler2.postDelayed(this, 30000);
-            }
-        };
-
-        handler2.post(runnable);
+//        url_line_trajectory = url_line_trajectory + "/" + lineSelected + "/" + trajectorySelected;
+//
+//        //initializes the executor for background threads
+//        es = Executors.newSingleThreadExecutor();
+//
+//        runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                Log.d(THIRD_ACTIVITY_TAG,"Updating reciclerView!!!");
+//
+//                // each 1 second
+//                //requesting content from created URL through HTTP
+//                loadSpecifictrayectory();
+//                handler2.postDelayed(this, 30000);
+//            }
+//        };
+//
+//        handler2.post(runnable);
 
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//
+//        //when changing to another activity we need to stop callback to prevent from memory leaks
+//        if (handler2 != null) {
+//            handler2.removeCallbacks(runnable);
+//        }
+//    }
 
-        //when changing to another activity we need to stop callback to prevent from memory leaks
-        if (handler2 != null) {
-            handler2.removeCallbacks(runnable);
-        }
-    }
 
 
-
-    private void loadSpecifictrayectory(){
-
-        // Execute the loading task in background in order to get the JSON with a specific information lines:
-        LoadURLContents loadURLContents = new LoadURLContents(handler, CONTENT_TYPE_JSON, url_line_trajectory,ThirdActivity.this);
-        es.execute(loadURLContents);
-    }
+//    private void loadSpecifictrayectory(){
+//
+//        // Execute the loading task in background in order to get the JSON with a specific information lines:
+//        LoadURLContents loadURLContents = new LoadURLContents(handler, CONTENT_TYPE_JSON, url_line_trajectory,ThirdActivity.this);
+//        es.execute(loadURLContents);
+//    }
 
 
 

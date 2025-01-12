@@ -10,9 +10,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        flatDir {
+            dirs("libs")
+        }
     }
 }
 
-rootProject.name = "ListOfItems"
+rootProject.name = "RoverMobileApp"
 include(":app")
  

@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import dte.masteriot.mdp.listofitems.R;
+import dte.masteriot.mdp.roverApp.R;
 
 public class SecondActivity extends AppCompatActivity implements JSONParsing{
 
@@ -17,7 +17,7 @@ public class SecondActivity extends AppCompatActivity implements JSONParsing{
     private Button controlButton;
     private Button monitorButton;
 
-    public static final String EXTRA_INFO_TO_THIRD_ACTIVITY_USER_TOKEN = "USERTOKEN";
+    public static final String EXTRA_INFO_ACTIVITY_USER_TOKEN = "USERTOKEN";
 
 
     private String userToken = "";
@@ -30,7 +30,7 @@ public class SecondActivity extends AppCompatActivity implements JSONParsing{
 
         // Get the text to be shown from the calling intent and set it in the layout
         Intent inputIntent = getIntent();
-        userToken = inputIntent.getStringExtra(EXTRA_INFO_TO_THIRD_ACTIVITY_USER_TOKEN);
+        userToken = inputIntent.getStringExtra(EXTRA_INFO_ACTIVITY_USER_TOKEN);
 
         Log.d(SECOND_ACTIVITY_TAG, "User token -> " + userToken);
 
@@ -44,6 +44,8 @@ public class SecondActivity extends AppCompatActivity implements JSONParsing{
             public void onClick(View v) {
                 Log.d(SECOND_ACTIVITY_TAG, "control button pressed");
 
+                launchControlActivity();
+
 
             }
         });
@@ -53,20 +55,22 @@ public class SecondActivity extends AppCompatActivity implements JSONParsing{
             public void onClick(View v) {
                 Log.d(SECOND_ACTIVITY_TAG, "monitor button pressed");
 
+                //ToDo: launch monitor activity
+
 
             }
         });
 
     }
 
-    private void launchControlActivity(String trajectoryNumber){
+    private void launchControlActivity(){
 
-        //launching 3º activity
-        //Intent intent = new Intent(this, ThirdActivity.class);
+        //launching control activity
+        Intent intent = new Intent(this, ThirdActivity.class);
         //intent.putExtra(EXTRA_INFO_TO_THIRD_ACTIVITY_LINE,lineSelected);
         //intent.putExtra(EXTRA_INFO_TO_THIRD_ACTIVITY_TRAJECTORY,trajectoryNumber);
         Log.d(SECOND_ACTIVITY_TAG,"Launching 3º activity");
-        //startActivity(intent);
+        startActivity(intent);
     }
 
 }
