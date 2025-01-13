@@ -60,8 +60,14 @@ public class ThirdActivity extends AppCompatActivity {
 
     //telemetry parameters
 
-    private String joystickAxisX = "333";
-    private String joystickAxisY = "333";
+    private String joystickAxisX = "";
+    private String joystickAxisY = "";
+    private String joystickAngle = "";
+    private String joystickDistance = "";
+
+    //joystick parameters
+    private int currentDirection;
+    private int lastDirection = 0;
 
     interface postJoystick{
 
@@ -92,8 +98,6 @@ public class ThirdActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        userPostJoystickTelemetry();
-
 
         try{
             final JoystickJhr joystick = findViewById(R.id.joystick);
@@ -105,17 +109,28 @@ public class ThirdActivity extends AppCompatActivity {
 
                     //debug prints
 
-                    Log.d(THIRD_ACTIVITY_TAG,"AXIS X ->" + joystick.joyX());
-                    Log.d(THIRD_ACTIVITY_TAG,"AXIS Y ->" + joystick.joyY());
-                    Log.d(THIRD_ACTIVITY_TAG,"ANGLE ->" + joystick.angle());
-                    Log.d(THIRD_ACTIVITY_TAG,"distancia ->" + joystick.distancia());
+//                    Log.d(THIRD_ACTIVITY_TAG,"AXIS X ->" + joystick.joyX());
+//                    Log.d(THIRD_ACTIVITY_TAG,"AXIS Y ->" + joystick.joyY());
+//                    Log.d(THIRD_ACTIVITY_TAG,"ANGLE ->" + joystick.angle());
+//                    Log.d(THIRD_ACTIVITY_TAG,"distancia ->" + joystick.distancia());
 
                     joystickAxisX = String.valueOf(joystick.joyX());
                     joystickAxisY = String.valueOf(joystick.joyY());
+                    joystickAngle = String.valueOf(joystick.angle());
+                    joystickDistance = String.valueOf(joystick.distancia());
 
-                    //ToDo: try to avoid to send repetitive data
+                    currentDirection = joystick.getDireccion();
 
-                    userPostJoystickTelemetry();
+                    //Log.d(THIRD_ACTIVITY_TAG,"direction ->" + currentDirection);
+
+                    if(currentDirection != lastDirection){
+                        lastDirection = currentDirection;
+
+                        Log.d(THIRD_ACTIVITY_TAG,"Sending joystick telemetry to thingsboard (dir " + currentDirection + ")");
+                        Log.d(THIRD_ACTIVITY_TAG,"data to be sent: X ->" + joystickAxisX + " Y -> " + joystickAxisY);
+
+                        userPostJoystickTelemetry();
+                    }
 
                     return true;
                 }

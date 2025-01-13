@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import dte.masteriot.mdp.roverApp.R;
 
@@ -55,7 +56,10 @@ public class SecondActivity extends AppCompatActivity implements JSONParsing{
             public void onClick(View v) {
                 Log.d(SECOND_ACTIVITY_TAG, "monitor button pressed");
 
+                Toast.makeText(SecondActivity.this, "IN PROGRESS...", Toast.LENGTH_SHORT).show();
                 //ToDo: launch monitor activity
+
+
 
 
             }
