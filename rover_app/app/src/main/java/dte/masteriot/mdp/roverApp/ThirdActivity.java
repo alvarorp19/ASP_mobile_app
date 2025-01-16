@@ -48,6 +48,7 @@ public class ThirdActivity extends AppCompatActivity {
     public static final String EXTRA_INFO_ACTIVITY_USER_TOKEN = "USERTOKEN";
 
     public static final String BUZZER_ON = "BUZZER_ON";
+    public static final String BUZZER_OFF = "BUZZER_OFF";
 
     private String userToken = "";
 
@@ -104,15 +105,22 @@ public class ThirdActivity extends AppCompatActivity {
 
         //callback for buzzer button
 
-        bBuzzer.setOnClickListener(new View.OnClickListener() {
+        bBuzzer.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Log.d(THIRD_ACTIVITY_TAG, "Buzzer button pressed");
-
-                //sending telemetry message to thingboard
-
-                userPostBuzzerTelemetry();
-
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        //button pressed
+                        Log.d(THIRD_ACTIVITY_TAG, "Button pressed");
+                        userPostBuzzerTelemetry(BUZZER_ON);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        //button unpressed
+                        Log.d(THIRD_ACTIVITY_TAG, "Button unpressed");
+                        userPostBuzzerTelemetry(BUZZER_OFF);
+                        break;
+                }
+                return false; // Devuelve false para que otros listeners, como OnClickListener, puedan ejecutarse
             }
         });
 
@@ -213,10 +221,10 @@ public class ThirdActivity extends AppCompatActivity {
     }
 
 
-    private void userPostBuzzerTelemetry(){
+    private void userPostBuzzerTelemetry(String command){
 
         postBuzzer postBuzzerRequest = retrofit.create(postBuzzer.class);
-        postBuzzerRequest.PostBuzzerTelemetry( new BuzzerPostTelemetry(BUZZER_ON)).enqueue(new Callback<Void>() {
+        postBuzzerRequest.PostBuzzerTelemetry( new BuzzerPostTelemetry(command)).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
 
