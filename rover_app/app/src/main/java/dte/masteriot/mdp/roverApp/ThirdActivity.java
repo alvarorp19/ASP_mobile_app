@@ -47,6 +47,8 @@ public class ThirdActivity extends AppCompatActivity {
 
     public static final String EXTRA_INFO_ACTIVITY_USER_TOKEN = "USERTOKEN";
 
+    public static final String BUZZER_ON = "BUZZER_ON";
+
     private String userToken = "";
 
     private String deviceToken = "c80zn9tfv9oiluyp2tss";
@@ -56,6 +58,8 @@ public class ThirdActivity extends AppCompatActivity {
     final static String APIURL = "https://srv-iot.diatel.upm.es";
 
     private Retrofit retrofit;
+
+
 
 
     //telemetry parameters
@@ -69,10 +73,22 @@ public class ThirdActivity extends AppCompatActivity {
     private int currentDirection;
     private int lastDirection = 0;
 
+    //buzzer boton
+
+    private Button bBuzzer;
+
+    //interface
+
     interface postJoystick{
 
         @POST("/api/v1/c80zn9tfv9oiluyp2tss/telemetry")
         Call<Void> PostJoystickTelemetry( @Body JoystickPostTelemetry joystickTelemetry);
+    }
+
+    interface postBuzzer{
+
+        @POST("/api/v1/c80zn9tfv9oiluyp2tss/telemetry")
+        Call<Void> PostBuzzerTelemetry( @Body BuzzerPostTelemetry joystickTelemetry);
     }
 
 
@@ -81,6 +97,24 @@ public class ThirdActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
+
+        //button
+
+        bBuzzer = findViewById(R.id.buzzerButton);
+
+        //callback for buzzer button
+
+        bBuzzer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(THIRD_ACTIVITY_TAG, "Buzzer button pressed");
+
+                //sending telemetry message to thingboard
+
+                userPostBuzzerTelemetry();
+
+            }
+        });
 
         // Get the text to be shown from the calling intent and set it in the layout
         Intent inputIntent = getIntent();
@@ -145,6 +179,44 @@ public class ThirdActivity extends AppCompatActivity {
 
         postJoystick postJoystickRequest = retrofit.create(postJoystick.class);
         postJoystickRequest.PostJoystickTelemetry( new JoystickPostTelemetry(joystickAxisX,joystickAxisY)).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                try{
+
+                    if (response.code() == 200){ //OK
+
+//                        userToken = response.body().getToken();
+//                        userRefreshToken = response.body().getRefreshToken();
+//
+                        Log.d(THIRD_ACTIVITY_TAG,"respuesta OK");
+//                        Log.d(MAINACTIVITYTAG,"Response from API (token) -> " + userToken);
+//                        Log.d(MAINACTIVITYTAG,"Response from API (Refresh token) -> " + userRefreshToken);
+//
+//                        launchSecondActivity();
+
+                    }else{//ERROR
+                        Log.d(THIRD_ACTIVITY_TAG,"Codigo de error:" + response.code());
+                    }
+
+                }catch (Exception e){
+                    Log.d(THIRD_ACTIVITY_TAG,"excepcion en la respuesta : " + e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                Log.d(THIRD_ACTIVITY_TAG,"Error response from API -> " + throwable.getMessage().toString());
+            }
+        });
+
+    }
+
+
+    private void userPostBuzzerTelemetry(){
+
+        postBuzzer postBuzzerRequest = retrofit.create(postBuzzer.class);
+        postBuzzerRequest.PostBuzzerTelemetry( new BuzzerPostTelemetry(BUZZER_ON)).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
 
