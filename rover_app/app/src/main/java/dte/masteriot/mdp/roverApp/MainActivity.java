@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity  {
     String userRefreshToken = "";
 
 
-    interface requestUser{
+    public interface requestUser{
 
         @POST("/api/auth/login")
         Call<UserRequest> PostUser(@Body RequestPost RequestPost);
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-    private void userLoginRequest(String username, String password){
+    public void userLoginRequest(String username, String password){
 
         requestUser requestUser = retrofit.create(requestUser.class);
         requestUser.PostUser(new RequestPost(username,password)).enqueue(new Callback<UserRequest>() {

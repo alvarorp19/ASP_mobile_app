@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ThirdActivity">
+
+    <LinearLayout
+        android:id="@+id/LinearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+
+        <FrameLayout
+            android:id="@+id/frameLayout1_1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="@color/red"
+                android:gravity="center_vertical"
+                android:text="ROVER MOBILE APP | CONTROL"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/miImagen"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical|right"
+                android:src="@drawable/rover_image"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout1_2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/miImagen1_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:src="@drawable/news_portrait"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:paddingTop="20dp"
+                android:text="MONITOR PANEL"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/miImagen1_4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_gravity="center|left"
+                android:src="@drawable/monitor_image"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout1_6"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="@drawable/rounded_element"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/miImagen1_7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:src="@drawable/control_panel_icon" />
+
+            <TextView
+                android:id="@+id/textSimulatedData"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:paddingTop="45dp"
+                android:text="Simulated data"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/LinearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"/>
+
+                <TableLayout
+                    android:id="@+id/tableLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- Primera fila de datos -->
+                    <TableRow
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="Rain"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/rainData"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="No data"
+                            android:textStyle="bold"/>
+
+                    </TableRow>
+
+                    <!-- Segunda fila de datos -->
+                    <TableRow
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="UV"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/UVData"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="No data"
+                            android:textStyle="bold"/>
+
+                    </TableRow>
+
+                </TableLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>
