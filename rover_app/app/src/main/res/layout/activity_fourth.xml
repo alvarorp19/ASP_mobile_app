@@ -30,7 +30,7 @@
                 android:layout_height="75dp"
                 android:background="@color/red"
                 android:gravity="center_vertical"
-                android:text="ROVER MOBILE APP | CONTROL"
+                android:text="ROVER MOBILE APP | MONITOR"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -109,12 +109,12 @@
                     android:id="@+id/textSimulatedData"
                     android:layout_width="match_parent"
                     android:layout_height="75dp"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_marginLeft="20dp"
                     android:paddingTop="45dp"
                     android:text="Latest telemetry for simulated data"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -142,7 +142,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
-                            android:text="Rain:         "
+                            android:text="Rain :             "
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -151,6 +152,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="No data"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                     </TableRow>
@@ -172,6 +174,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="UV :"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -180,6 +183,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="No data"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                     </TableRow>
@@ -190,12 +194,12 @@
                     android:id="@+id/textRealData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|center_horizontal"
                     android:text="Latest telemetry for real data"
+                    android:layout_marginLeft="20dp"
                     android:paddingTop="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -223,6 +227,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="Battery :"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -231,6 +236,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="No data"
+                            android:textSize="11dp"
                             android:textStyle="bold" />
 
                     </TableRow>
@@ -251,6 +257,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="Pressure :"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -259,6 +266,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="No data"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                     </TableRow>
@@ -280,6 +288,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="Humidity :"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -288,6 +297,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="No data"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                     </TableRow>
@@ -308,6 +318,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="Temperature :"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -316,6 +327,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="No data"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                     </TableRow>
@@ -339,6 +351,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="PM2.5 :"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -347,6 +360,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="No data"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                     </TableRow>
@@ -367,6 +381,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="PM10 :"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -375,6 +390,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:text="No data"
+                            android:textSize="11dp"
                             android:textStyle="bold"/>
                     </TableRow>
 
