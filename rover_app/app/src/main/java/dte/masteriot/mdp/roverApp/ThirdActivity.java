@@ -171,6 +171,8 @@ public class ThirdActivity extends AppCompatActivity {
                         Log.d(THIRD_ACTIVITY_TAG,"Sending joystick telemetry to thingsboard (dir " + currentDirection + ")");
                         Log.d(THIRD_ACTIVITY_TAG,"data to be sent: X ->" + joystickAxisX + " Y -> " + joystickAxisY);
 
+                        //ToDo: cambiarla URL de la API
+
                         userPostJoystickTelemetry();
                     }
 

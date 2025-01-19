@@ -83,7 +83,7 @@
         <FrameLayout
             android:id="@+id/frameLayout1_6"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="550dp"
             android:background="@drawable/rounded_element"
             android:layout_gravity="center"
             android:orientation="horizontal">
@@ -95,17 +95,6 @@
                 android:layout_margin="10dp"
                 android:src="@drawable/control_panel_icon" />
 
-            <TextView
-                android:id="@+id/textSimulatedData"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:paddingTop="45dp"
-                android:text="Simulated data"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="20sp" />
-
             <LinearLayout
                 android:id="@+id/LinearLayout3"
                 android:layout_width="match_parent"
@@ -116,9 +105,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
+                <TextView
+                    android:id="@+id/textSimulatedData"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:paddingTop="45dp"
+                    android:text="Latest telemetry for simulated data"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"/>
+                    android:layout_height="10dp"/>
+
 
                 <TableLayout
                     android:id="@+id/tableLayout"
@@ -131,11 +132,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/gotas"/>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
-                            android:text="Rain"
+                            android:text="Rain:         "
                             android:textStyle="bold"/>
 
                         <TextView
@@ -154,11 +161,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/indice_uv"/>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
-                            android:text="UV"
+                            android:text="UV :"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -173,6 +186,200 @@
 
                 </TableLayout>
 
+                <TextView
+                    android:id="@+id/textRealData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Latest telemetry for real data"
+                    android:paddingTop="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+
+                <TableLayout
+                    android:id="@+id/tableLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- Primera fila de datos -->
+                    <TableRow
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/baterias"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="Battery :"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/batteryData"
+                            android:layout_width="58dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="No data"
+                            android:textStyle="bold" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/compresor"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="Pressure :"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/PressureData"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="No data"
+                            android:textStyle="bold"/>
+
+                    </TableRow>
+
+                    <!-- Segunda fila de datos -->
+                    <TableRow
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/humedad"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="Humidity :"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/humidityData"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="No data"
+                            android:textStyle="bold"/>
+
+                    </TableRow>
+
+                    <TableRow
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/temperatura_alta"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="Temperature :"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/TemperatureData"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="No data"
+                            android:textStyle="bold"/>
+
+                    </TableRow>
+
+
+
+                    <!-- Segunda fila de datos -->
+                    <TableRow
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/atomos"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="PM2.5 :"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/PM2_5Data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="No data"
+                            android:textStyle="bold"/>
+
+                    </TableRow>
+
+                    <TableRow
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/atomos"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="PM10 :"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/PM10Data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="No data"
+                            android:textStyle="bold"/>
+                    </TableRow>
+
+
+                </TableLayout>
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
