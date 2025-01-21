@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.os.Handler;
 
 public class FourthActivity extends AppCompatActivity{
 
@@ -31,7 +32,10 @@ public class FourthActivity extends AppCompatActivity{
     private static final String FOURTH_ACTIVITY_TAG = "FOURTH_ACTIVITY_TAG";
     public static final String EXTRA_INFO_ACTIVITY_USER_TOKEN = "USERTOKEN";
 
+    //handler for repetitive task
 
+    Handler handler = new Handler();
+    Runnable runnable;
 
     //elements from the layout
 
@@ -98,7 +102,38 @@ public class FourthActivity extends AppCompatActivity{
         userGetSimulatedTelemetry();
         userGetRealTelemetry();
 
-        //ToDo: implement a algorithm to update telemetry every X seconds
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                //Get measure each 10 seconds
+                userGetSimulatedTelemetry();
+                userGetRealTelemetry();
+
+                Log.d(FOURTH_ACTIVITY_TAG,"Telemetry obtained from ThingsBoard");
+
+                handler.postDelayed(this, 10000);
+            }
+        };
+
+        //Starting periodic routine
+        handler.post(runnable);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d(FOURTH_ACTIVITY_TAG,"4º activity stopped");
+
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //handler.post(runnable);
     }
 
     private void userGetSimulatedTelemetry() {
