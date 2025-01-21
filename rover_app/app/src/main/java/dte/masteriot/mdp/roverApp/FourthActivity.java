@@ -62,7 +62,7 @@ public class FourthActivity extends AppCompatActivity{
         Call<UserRequest> PostUser(@Body RequestPost RequestPost);
 
         @Headers({"Content-Type: application/json"})
-        @GET("/api/plugins/telemetry/DEVICE/e5a176f0-cd1b-11ef-bab7-d10af52420c3/values/timeseries?keys=rain,UV")
+        @GET("/api/plugins/telemetry/DEVICE/e8e40740-d76d-11ef-bab7-d10af52420c3/values/timeseries?keys=rainRate,solarRadiation")
         Call<RequestSimulatedData> GetSimulatedTelemetry(@Header("X-Authorization") String token);
 
         @Headers({"Content-Type: application/json"})
@@ -149,15 +149,17 @@ public class FourthActivity extends AppCompatActivity{
 
                         RequestSimulatedData data = response.body();
 
+                        Log.d(FOURTH_ACTIVITY_TAG, "simulated data OK ");
+
                         //Getting rain parameter
 
-                        for (TelemetryEntry entry : data.getRain()) {
+                        for (TelemetryEntry entry : data.getrainRate()) {
                             textRain.setText(entry.getValue() + " mm/h | " + unixTimeToDateTime(entry.getTs()));
                         }
 
                         //Getting UV parameter
 
-                        for (TelemetryEntry entry : data.getUV()) {
+                        for (TelemetryEntry entry : data.getsolarRadiation()) {
                             textUV.setText(entry.getValue() + " W/m^2 | " + unixTimeToDateTime(entry.getTs()));
                         }
 

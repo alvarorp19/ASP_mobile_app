@@ -8,23 +8,23 @@ import java.util.List;
 public class RequestSimulatedData {
 
 
-    private List<TelemetryEntry> rain; // Array de telemetría para "rain"
-    private List<TelemetryEntry> UV;   // Array de telemetría para "UV"
+    private List<TelemetryEntry> rainRate; // Array de telemetría para "rain"
+    private List<TelemetryEntry> solarRadiation;   // Array de telemetría para "UV"
 
     // Getters y setters
-    public List<TelemetryEntry> getRain() {
-        return rain;
+    public List<TelemetryEntry> getrainRate() {
+        return rainRate;
     }
 
-    public void setRain(List<TelemetryEntry> rain) {
-        this.rain = rain;
+    public void setrainRate(List<TelemetryEntry> rain) {
+        this.rainRate = rain;
     }
 
-    public List<TelemetryEntry> getUV() {
-        return UV;
+    public List<TelemetryEntry> getsolarRadiation() {
+        return solarRadiation;
     }
 
-    public void setUV(List<TelemetryEntry> UV) {
-        this.UV = UV;
+    public void setsolarRadiation(List<TelemetryEntry> UV) {
+        this.solarRadiation = UV;
     }
 }
