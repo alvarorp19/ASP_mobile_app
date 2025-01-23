@@ -113,18 +113,6 @@
                 android:textStyle="bold"
                 app:rellenoSize = "12"/>
 
-            <Button
-                android:id="@+id/buzzerButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BUZZER"
-                android:textStyle="bold"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/stop_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
 
         </FrameLayout>
     </LinearLayout>

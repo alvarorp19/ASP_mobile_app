@@ -2,26 +2,26 @@ package dte.masteriot.mdp.roverApp;
 
 public class JoystickPostTelemetry {
 
-    String joystick_axis_x, Joystick_axis_y;
+    String xAxis, yAxis;
 
     public JoystickPostTelemetry(String joystick_axis_x, String getJoystick_axis_y) {
-        this.joystick_axis_x = joystick_axis_x;
-        this.Joystick_axis_y = getJoystick_axis_y;
+        this.xAxis = joystick_axis_x;
+        this.yAxis = getJoystick_axis_y;
     }
 
     public String getJoystick_axis_x() {
-        return joystick_axis_x;
+        return xAxis;
     }
 
     public void setJoystick_axis_x(String joystick_axis_x) {
-        this.joystick_axis_x = joystick_axis_x;
+        this.xAxis = joystick_axis_x;
     }
 
     public String getGetJoystick_axis_y() {
-        return Joystick_axis_y;
+        return yAxis;
     }
 
     public void setGetJoystick_axis_y(String getJoystick_axis_y) {
-        this.Joystick_axis_y = getJoystick_axis_y;
+        this.yAxis = getJoystick_axis_y;
     }
 }

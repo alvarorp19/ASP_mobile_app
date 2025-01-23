@@ -224,10 +224,9 @@ public class FourthActivity extends AppCompatActivity{
                         }
 
                         //Getting PM2.5 parameter
-
-//                        for (TelemetryEntry entry : data.getBattery()) {
-//                            textBattery.setText(entry.getValue() + " V | " + unixTimeToDateTime(entry.getTs()));
-//                        }
+                        for (TelemetryEntry entry : data.getPM2_5()) {
+                            textBattery.setText(entry.getValue() + " Ug/m^3 | " + unixTimeToDateTime(entry.getTs()));
+                        }
 
                         //Getting PM10 parameter
 

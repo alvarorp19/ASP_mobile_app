@@ -2,17 +2,17 @@ package dte.masteriot.mdp.roverApp;
 
 public class BuzzerPostTelemetry {
 
-    String Buzzer;
+    boolean buzzer;
 
-    public BuzzerPostTelemetry(String buzzer) {
-        Buzzer = buzzer;
+    public BuzzerPostTelemetry(boolean buzzer) {
+        this.buzzer = buzzer;
     }
 
-    public String getBuzzer() {
-        return Buzzer;
+    public boolean getBuzzer() {
+        return this.buzzer;
     }
 
-    public void setBuzzer(String buzzer) {
-        Buzzer = buzzer;
+    public void setBuzzer(Boolean buzzer) {
+        this.buzzer = buzzer;
     }
 }
