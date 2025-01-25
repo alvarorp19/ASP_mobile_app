@@ -61,7 +61,8 @@ public class ThirdActivity extends AppCompatActivity {
     private Retrofit retrofit;
 
 
-
+    Runnable runnable;
+    Handler handler = new Handler();
 
     //telemetry parameters
 
@@ -73,6 +74,10 @@ public class ThirdActivity extends AppCompatActivity {
     //joystick parameters
     private int currentDirection;
     private int lastDirection = 0;
+
+    //timer parameter
+
+    private boolean flagJoystick = false;
 
     //interface
 
@@ -118,8 +123,36 @@ public class ThirdActivity extends AppCompatActivity {
 //                    Log.d(THIRD_ACTIVITY_TAG,"ANGLE ->" + joystick.angle());
 //                    Log.d(THIRD_ACTIVITY_TAG,"distancia ->" + joystick.distancia());
 
-                    joystickAxisX = String.valueOf(joystick.joyX());
-                    joystickAxisY = String.valueOf(joystick.joyY());
+                    //casting joystick axis values
+
+                    int xAxis = (int) joystick.joyX();
+                    int yAxis = (int) joystick.joyY();
+
+                    //Checking max values
+
+                    if(xAxis > MAX_JOYSTICK_VALUE){
+
+                        xAxis = 100;
+
+                    } else if (xAxis < MIN_JOYSTICK_VALUE) {
+
+                        xAxis = -100;
+
+                    }
+
+                    //Checking min values
+
+                    if(yAxis > MAX_JOYSTICK_VALUE){
+
+                        yAxis = 100;
+
+                    } else if (yAxis < MAX_JOYSTICK_VALUE) {
+
+                        yAxis = -100;
+                    }
+
+                    joystickAxisX = String.valueOf(xAxis);
+                    joystickAxisY = String.valueOf(yAxis);
                     joystickAngle = String.valueOf(joystick.angle());
                     joystickDistance = String.valueOf(joystick.distancia());
 
@@ -127,39 +160,20 @@ public class ThirdActivity extends AppCompatActivity {
 
                     //Log.d(THIRD_ACTIVITY_TAG,"direction ->" + currentDirection);
 
+                    //ToDo: revisar esta parte del código
+
                     if(currentDirection != lastDirection){
                         lastDirection = currentDirection;
 
-                        //Checking max values
+                        if(flagJoystick){//this flag is set be the timer
 
-//                        if(Float.parseFloat(joystickAxisX) > MAX_JOYSTICK_VALUE){
-//
-//                            //we assing max value
-//                            joystickAxisX = "100";
-//
-//                        } else if (Float.parseFloat(joystickAxisX) < MIN_JOYSTICK_VALUE) {
-//
-//                            //we assing max value
-//                            joystickAxisX = "-100";
-//
-//                        }
-//
-//                        if(Float.parseFloat(joystickAxisY) > MAX_JOYSTICK_VALUE){
-//
-//                            //we assing max value
-//                            joystickAxisY = "100";
-//
-//                        } else if (Float.parseFloat(joystickAxisY) < MAX_JOYSTICK_VALUE) {
-//
-//                            //we assing max value
-//                            joystickAxisY = "-100";
-//
-//                        }
+                            flagJoystick = false;
 
-                        Log.d(THIRD_ACTIVITY_TAG,"Sending joystick telemetry to thingsboard (dir " + currentDirection + ")");
-                        Log.d(THIRD_ACTIVITY_TAG,"data to be sent: X ->" + joystickAxisX + " Y -> " + joystickAxisY);
+                            Log.d(THIRD_ACTIVITY_TAG,"Sending joystick telemetry to thingsboard (dir " + currentDirection + ")");
+                            Log.d(THIRD_ACTIVITY_TAG,"data to be sent: X ->" + joystickAxisX + " Y -> " + joystickAxisY);
 
-                        userPostJoystickTelemetry();
+                            userPostJoystickTelemetry();
+                        }
                     }
 
                     return true;
@@ -169,6 +183,25 @@ public class ThirdActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.d(THIRD_ACTIVITY_TAG,"exception" + e);
         }
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+
+
+                if (!flagJoystick){
+
+                    flagJoystick = true;
+                }
+
+                Log.d(THIRD_ACTIVITY_TAG,"timer 1 second activated | TRUE");
+
+                handler.postDelayed(this, 1000);
+            }
+        };
+
+        //Starting periodic routine
+        handler.post(runnable);
     }
 
     private void userPostJoystickTelemetry(){
