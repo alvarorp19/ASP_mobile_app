@@ -11,12 +11,13 @@ import android.widget.Toast;
 
 import dte.masteriot.mdp.roverApp.R;
 
-public class SecondActivity extends AppCompatActivity implements JSONParsing{
+public class SecondActivity extends AppCompatActivity{
 
     private static final String SECOND_ACTIVITY_TAG = "SECOND_ACTIVITY_TAG";
 
     private Button controlButton;
     private Button monitorButton;
+    private Button cameraButton;
 
     public static final String EXTRA_INFO_ACTIVITY_USER_TOKEN = "USERTOKEN";
 
@@ -39,6 +40,7 @@ public class SecondActivity extends AppCompatActivity implements JSONParsing{
         //buttons initialization
         controlButton = findViewById(R.id.button1);
         monitorButton = findViewById(R.id.button2);
+        cameraButton = findViewById(R.id.button3);
 
         controlButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,8 +60,16 @@ public class SecondActivity extends AppCompatActivity implements JSONParsing{
 
                 launchMonitorActivity();
 
+            }
+        });
 
 
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(SECOND_ACTIVITY_TAG, "camera button pressed");
+
+                launchCamaraActivity();
 
             }
         });
@@ -82,6 +92,16 @@ public class SecondActivity extends AppCompatActivity implements JSONParsing{
         Intent intent = new Intent(this, FourthActivity.class);
         intent.putExtra(EXTRA_INFO_ACTIVITY_USER_TOKEN,userToken);
         Log.d(SECOND_ACTIVITY_TAG,"Launching 4º activity");
+        startActivity(intent);
+    }
+
+
+    private void launchCamaraActivity(){
+
+        //launching control activity
+        Intent intent = new Intent(this, FifthActivity.class);
+        intent.putExtra(EXTRA_INFO_ACTIVITY_USER_TOKEN,userToken);
+        Log.d(SECOND_ACTIVITY_TAG,"Launching 5º activity");
         startActivity(intent);
     }
 
