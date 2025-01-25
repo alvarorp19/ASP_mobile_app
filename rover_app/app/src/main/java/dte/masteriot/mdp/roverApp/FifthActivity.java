@@ -2,6 +2,7 @@ package dte.masteriot.mdp.roverApp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -37,6 +38,11 @@ public class FifthActivity extends AppCompatActivity {
 
     private ImageView imageView;
 
+    //handler for repetitive task
+
+    Handler handler = new Handler();
+    Runnable runnable;
+
     //interfaces
     interface ThingsBoardHTTPInterface{
 
@@ -67,11 +73,36 @@ public class FifthActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        //get last camara image from thingsBoard
+        runnable = new Runnable() {
+            @Override
+            public void run() {
 
-        userGetCameraTelemetry();
+                //Get image from rover each 10 seconds
+                userGetCameraTelemetry();
+
+                Log.d(FIFTH_ACTIVITY_TAG,"Image from the rover's camera retrieved!");
+
+                handler.postDelayed(this, 10000);
+            }
+        };
+
+        //Starting periodic routine
+        handler.post(runnable);
 
     }
+
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d(FIFTH_ACTIVITY_TAG,"5º activity stopped");
+
+        handler.removeCallbacks(runnable);
+    }
+
+
 
     private void userGetCameraTelemetry() {
 

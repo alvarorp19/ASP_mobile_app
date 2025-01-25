@@ -32,7 +32,7 @@
                 android:textSize="20sp"
                 android:textColor="@color/white"
                 android:gravity="center_vertical"
-                android:text="ROVER MOBILE APP | MODES"  />
+                android:text="ROVER MOBILE APP | CAMERA"  />
 
             <ImageView
                 android:id="@+id/rover_image"
