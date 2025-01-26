@@ -10,8 +10,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +42,7 @@ public class FifthActivity extends AppCompatActivity {
     private Retrofit retrofit;
 
     private ImageView imageView;
+    private TextView bannerText;
 
     //handler for repetitive task
 
@@ -65,6 +71,7 @@ public class FifthActivity extends AppCompatActivity {
 
         //init camera UI element
         imageView = findViewById(R.id.imageCamera);
+        bannerText = findViewById(R.id.textViewCamera);
 
         //RetroFit initialization
 
@@ -77,12 +84,12 @@ public class FifthActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                //Get image from rover each 10 seconds
+                //Get image from rover each 1 second
                 userGetCameraTelemetry();
 
                 Log.d(FIFTH_ACTIVITY_TAG,"Image from the rover's camera retrieved!");
 
-                handler.postDelayed(this, 10000);
+                handler.postDelayed(this, 1000);
             }
         };
 
@@ -111,6 +118,8 @@ public class FifthActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RequestCameraData> call, Response<RequestCameraData> response) {
 
+                long timestamp = 0;
+
                 try {
 
                     if (response.code() == 200) { //OK
@@ -125,7 +134,13 @@ public class FifthActivity extends AppCompatActivity {
 
                             Log.d(FIFTH_ACTIVITY_TAG,entry.getValue());
                             decodeCameraImage(entry.getValue());
+
+                            timestamp = entry.getTs();
                         }
+
+                        //update banner message
+
+                        bannerText.setText("AT " + TelemetryEntry.unixTimeToDateTime(timestamp));
 
 
 

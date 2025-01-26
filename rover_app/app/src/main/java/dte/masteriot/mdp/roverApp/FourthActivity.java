@@ -66,7 +66,7 @@ public class FourthActivity extends AppCompatActivity{
         Call<RequestSimulatedData> GetSimulatedTelemetry(@Header("X-Authorization") String token);
 
         @Headers({"Content-Type: application/json"})
-        @GET("/api/plugins/telemetry/DEVICE/e5a176f0-cd1b-11ef-bab7-d10af52420c3/values/timeseries?keys=battery,pressure,humidity,temperature,PM10")
+        @GET("/api/plugins/telemetry/DEVICE/e5a176f0-cd1b-11ef-bab7-d10af52420c3/values/timeseries?keys=battery,pressure,humidity,temperature,PM10,PM2_5")
         Call<RequestRealData> GetRealTelemetry(@Header("X-Authorization") String token);
     }
 
@@ -154,13 +154,13 @@ public class FourthActivity extends AppCompatActivity{
                         //Getting rain parameter
 
                         for (TelemetryEntry entry : data.getrainRate()) {
-                            textRain.setText(entry.getValue() + " mm/h | " + unixTimeToDateTime(entry.getTs()));
+                            textRain.setText(entry.getValue() + " mm/h | " + TelemetryEntry.unixTimeToDateTime(entry.getTs()));
                         }
 
                         //Getting UV parameter
 
                         for (TelemetryEntry entry : data.getsolarRadiation()) {
-                            textUV.setText(entry.getValue() + " W/m^2 | " + unixTimeToDateTime(entry.getTs()));
+                            textUV.setText(entry.getValue() + " W/m^2 | " + TelemetryEntry.unixTimeToDateTime(entry.getTs()));
                         }
 
 
@@ -202,36 +202,36 @@ public class FourthActivity extends AppCompatActivity{
                         //Getting battery parameter
 
                         for (TelemetryEntry entry : data.getBattery()) {
-                            textBattery.setText(entry.getValue() + " V | " + unixTimeToDateTime(entry.getTs()));
+                            textBattery.setText(entry.getValue() + " V | " + TelemetryEntry.unixTimeToDateTime(entry.getTs()));
                         }
 
                         //Getting pressure parameter
 
                         for (TelemetryEntry entry : data.getPressure()) {
-                            textPressure.setText(entry.getValue() + " hPa | " + unixTimeToDateTime(entry.getTs()));
+                            textPressure.setText(entry.getValue() + " hPa | " + TelemetryEntry.unixTimeToDateTime(entry.getTs()));
                         }
 
                         //Getting humidity parameter
 
                         for (TelemetryEntry entry : data.getHumidity()) {
-                            textHumidity.setText(entry.getValue() + " %RH | " + unixTimeToDateTime(entry.getTs()));
+                            textHumidity.setText(entry.getValue() + " %RH | " + TelemetryEntry.unixTimeToDateTime(entry.getTs()));
                         }
 
                         //Getting temperature parameter
 
                         for (TelemetryEntry entry : data.getTemperature()) {
-                            textTemperature.setText(entry.getValue() + " ºC | " + unixTimeToDateTime(entry.getTs()));
-                        }
-
-                        //Getting PM2.5 parameter
-                        for (TelemetryEntry entry : data.getPM2_5()) {
-                            textBattery.setText(entry.getValue() + " Ug/m^3 | " + unixTimeToDateTime(entry.getTs()));
+                            textTemperature.setText(entry.getValue() + " ºC | " + TelemetryEntry.unixTimeToDateTime(entry.getTs()));
                         }
 
                         //Getting PM10 parameter
 
                         for (TelemetryEntry entry : data.getPM10()) {
-                            textPM10.setText(entry.getValue() + " Ug/m^3 | " + unixTimeToDateTime(entry.getTs()));
+                            textPM10.setText(entry.getValue() + " Ug/m^3 | " + TelemetryEntry.unixTimeToDateTime(entry.getTs()));
+                        }
+
+                        //Getting PM2.5 parameter
+                        for (TelemetryEntry entry : data.getPM2_5()) {
+                            textPM2_5.setText(entry.getValue() + " Ug/m^3 | " + TelemetryEntry.unixTimeToDateTime(entry.getTs()));
                         }
 
 
@@ -291,17 +291,6 @@ public class FourthActivity extends AppCompatActivity{
 
             }
         });
-    }
-
-
-    public String unixTimeToDateTime(long unixTimestamp){
-
-        Date date = new Date(unixTimestamp);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        String formattedDate = sdf.format(date);
-
-        return formattedDate;
     }
 
 

@@ -44,11 +44,47 @@
 
         </FrameLayout>
 
+        <FrameLayout
+            android:id="@+id/frameLayout1_2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/miImagen1_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:src="@drawable/news_portrait"/>
+
+            <TextView
+                android:id="@+id/textViewCamera"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:paddingTop="20dp"
+                android:text="ROVER CAMERA"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/miImagen1_4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_gravity="center|left"
+                android:src="@drawable/camera"/>
+
+        </FrameLayout>
+
         <ImageView
             android:id="@+id/imageCamera"
             android:layout_width="350dp"
             android:layout_height="350dp"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:scaleType="centerCrop" />
 
     </LinearLayout>
