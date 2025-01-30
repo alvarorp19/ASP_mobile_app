@@ -6,10 +6,12 @@ package dte.masteriot.mdp.roverApp;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
     String userToken = "";
     String userRefreshToken = "";
 
+    private Thread notificationThread;
+
 
     public interface requestUser {
 
@@ -121,9 +125,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //creating notification thread on background
+
+        notificationThread = new Thread(new NotificationClass(this));
+        notificationThread.start();
+
+
         //create notification channel
         CreateNotificationChannel();
-
         showNotification("Testing notifications");
     }
 
@@ -207,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
     public void showNotification(String notificationContent) {
         String idCanal = "1234";
         int idNotificacion = 2;
+
+        Context contextoGlobal = getApplicationContext();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, idCanal)
                 .setSmallIcon(R.drawable.rover_icon)
