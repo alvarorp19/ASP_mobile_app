@@ -4,7 +4,11 @@
 
 package dte.masteriot.mdp.roverApp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +18,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import dte.masteriot.mdp.roverApp.R;
 import retrofit2.Call;
@@ -23,7 +31,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.*;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
 
     //MIME types
@@ -62,7 +70,7 @@ public class MainActivity extends AppCompatActivity  {
     String userRefreshToken = "";
 
 
-    public interface requestUser{
+    public interface requestUser {
 
         @POST("/api/auth/login")
         Call<UserRequest> PostUser(@Body RequestPost RequestPost);
@@ -94,14 +102,14 @@ public class MainActivity extends AppCompatActivity  {
                 //checking that login data is correct to launch the next activity
                 //user and password will be used to perform HTTP requests
 
-                if(editTextUser.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()){
+                if (editTextUser.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()) {
 
-                    Log.d(MAINACTIVITYTAG,"boton pressed -> incorrect login");
+                    Log.d(MAINACTIVITYTAG, "boton pressed -> incorrect login");
                     Toast.makeText(MainActivity.this, "INCORRECT CREDENTIALS", Toast.LENGTH_SHORT).show();
 
-                }else{
+                } else {
 
-                    Log.d(MAINACTIVITYTAG,"boton pressed -> correct login");
+                    Log.d(MAINACTIVITYTAG, "boton pressed -> correct login");
 
                     //checking whether the credentials are correct or not
 
@@ -113,6 +121,10 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
+        //create notification channel
+        CreateNotificationChannel();
+
+        showNotification("Testing notifications");
     }
 
     @Override
@@ -121,53 +133,99 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-    public void userLoginRequest(String username, String password){
+    public void userLoginRequest(String username, String password) {
 
         requestUser requestUser = retrofit.create(requestUser.class);
-        requestUser.PostUser(new RequestPost(username,password)).enqueue(new Callback<UserRequest>() {
+        requestUser.PostUser(new RequestPost(username, password)).enqueue(new Callback<UserRequest>() {
             @Override
             public void onResponse(Call<UserRequest> call, Response<UserRequest> response) {
 
-                try{
+                try {
 
-                    if (response.code() == 200){ //OK
+                    if (response.code() == 200) { //OK
 
                         userToken = response.body().getToken();
                         userRefreshToken = response.body().getRefreshToken();
 
-                        Log.d(MAINACTIVITYTAG,"respuesta:");
-                        Log.d(MAINACTIVITYTAG,"Response from API (token) -> " + userToken);
-                        Log.d(MAINACTIVITYTAG,"Response from API (Refresh token) -> " + userRefreshToken);
+                        Log.d(MAINACTIVITYTAG, "respuesta:");
+                        Log.d(MAINACTIVITYTAG, "Response from API (token) -> " + userToken);
+                        Log.d(MAINACTIVITYTAG, "Response from API (Refresh token) -> " + userRefreshToken);
 
                         launchSecondActivity();
 
-                    }else{//ERROR
-                        Log.d(MAINACTIVITYTAG,"Codigo de error:" + response.code());
+                    } else {//ERROR
+                        Log.d(MAINACTIVITYTAG, "Codigo de error:" + response.code());
 
                         Toast.makeText(MainActivity.this, "INCORRECT CREDENTIALS", Toast.LENGTH_SHORT).show();
                     }
 
-                }catch (Exception e){
-                    Log.d(MAINACTIVITYTAG,"excepcion en la respuesta : " + e);
+                } catch (Exception e) {
+                    Log.d(MAINACTIVITYTAG, "excepcion en la respuesta : " + e);
                 }
             }
 
             @Override
             public void onFailure(Call<UserRequest> call, Throwable throwable) {
-                Log.d(MAINACTIVITYTAG,"Error response from API -> " + throwable.getMessage().toString());
+                Log.d(MAINACTIVITYTAG, "Error response from API -> " + throwable.getMessage().toString());
             }
         });
 
     }
 
 
-    private void launchSecondActivity(){
+    private void launchSecondActivity() {
 
         //launching 3º activity
         Intent intent = new Intent(this, SecondActivity.class);
-        intent.putExtra(EXTRA_INFO_ACTIVITY_USER_TOKEN,userToken);
-        Log.d(MAINACTIVITYTAG,"Launching 2º activity");
+        intent.putExtra(EXTRA_INFO_ACTIVITY_USER_TOKEN, userToken);
+        Log.d(MAINACTIVITYTAG, "Launching 2º activity");
         startActivity(intent);
+    }
+
+
+    public void CreateNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String idCanal = "1234";
+            CharSequence nombre = "AlarmChannel";
+            String descripcion = "Channel for alarms notification";
+            int importancia = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel canal = new NotificationChannel(idCanal, nombre, importancia);
+            canal.setDescription(descripcion);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.createNotificationChannel(canal);
+                Log.d(MAINACTIVITYTAG, "Notification channel created!");
+            }
+        } else {
+            Log.d(MAINACTIVITYTAG, "Unable to create the notification channel!");
+        }
+
+    }
+
+    public void showNotification(String notificationContent) {
+        String idCanal = "1234";
+        int idNotificacion = 2;
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, idCanal)
+                .setSmallIcon(R.drawable.rover_icon)
+                .setContentTitle("¡New Alarm!")
+                .setContentText(notificationContent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
+            return; // No continúes si el permiso no está concedido
+        }
+
+        Log.d(MAINACTIVITYTAG, "showing notification!");
+        manager.notify(idNotificacion, builder.build());
     }
 
 }
