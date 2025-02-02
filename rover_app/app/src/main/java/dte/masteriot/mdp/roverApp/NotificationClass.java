@@ -15,7 +15,9 @@ import androidx.core.content.ContextCompat;
 
 import org.json.JSONArray;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +47,8 @@ public class NotificationClass implements Runnable{
 
     private String userToken = "";
 
+    private Map<String, Boolean> mapa = new HashMap<>();
+
 
     public NotificationClass(Context context,String userToken) {
         this.userToken = userToken;
@@ -68,7 +72,7 @@ public class NotificationClass implements Runnable{
         while(true){
 
             try {
-                showNotification("New notification");
+
                 Log.d(NOTIFICATION_MSG,"notification background thread running now!");
                 userGetAlarmsData();
                 Thread.sleep(3000);
@@ -151,18 +155,30 @@ public class NotificationClass implements Runnable{
 
                         //JSONArray data = new JSONArray(str);
 
-                        Log.d(NOTIFICATION_MSG, "simulated data OK ");
-
-                        //Getting rain parameter
+                        Log.d(NOTIFICATION_MSG, "Alarms data OK ");
 
                         List<alarmDataEntry> data = response.body();
+
+                        //checking alarms
 
                         for (alarmDataEntry entry : data) {
                             Log.d(NOTIFICATION_MSG, "Alarm name -> " + entry.getKey());
                             Log.d(NOTIFICATION_MSG,"Hot alarm status -> " + entry.isValue());
-                        }
 
-                       //checkear alarms
+                            mapa.put(entry.getKey(),entry.isValue());
+
+                            //going through all the map
+                            for (Map.Entry<String, Boolean> entr : mapa.entrySet()) {
+                                //Log.d(NOTIFICATION_MSG,"Clave: " + entr.getKey() + ", Valor: " + entr.getValue());
+                                if (entr.getValue()) {
+
+                                    //New alarm has arisen
+                                    showNotification("Alarm " + entr.getKey() + " has arisen");
+
+
+                                }
+                            }
+                        }
 
 
                     } else if (response.code() == 401){//Unauthorired
