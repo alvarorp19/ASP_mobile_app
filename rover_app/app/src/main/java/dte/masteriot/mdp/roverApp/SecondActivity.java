@@ -21,6 +21,7 @@ public class SecondActivity extends AppCompatActivity{
 
     public static final String EXTRA_INFO_ACTIVITY_USER_TOKEN = "USERTOKEN";
 
+    private Thread notificationThread;
 
     private String userToken = "";
 
@@ -41,6 +42,12 @@ public class SecondActivity extends AppCompatActivity{
         controlButton = findViewById(R.id.button1);
         monitorButton = findViewById(R.id.button2);
         cameraButton = findViewById(R.id.button3);
+
+        //alarms
+        //creating notification thread on background
+
+        notificationThread = new Thread(new NotificationClass(this,userToken));
+        notificationThread.start();
 
         controlButton.setOnClickListener(new View.OnClickListener() {
             @Override

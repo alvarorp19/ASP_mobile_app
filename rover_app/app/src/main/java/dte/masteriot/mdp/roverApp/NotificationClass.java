@@ -13,16 +13,44 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONArray;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.GET;
+
 
 public class NotificationClass implements Runnable{
+
+    interface ThingsBoardAlarms{
+
+        @GET("/api/plugins/telemetry/DEVICE/e5a176f0-cd1b-11ef-bab7-d10af52420c3/values/attributes/SHARED_SCOPE?keys=alarm_hot,alarm_rain,alarm_cold,alarm_pollution,alarm_fire")
+        Call<List<alarmDataEntry>> GetAlarms(@Header("X-Authorization") String authorization);
+    }
 
 
     private static final String NOTIFICATION_MSG = "NOTIFICATION_MSG";
     private Context contextoGlobal;
 
-    // Constructor que recibe el contexto
-    public NotificationClass(Context context) {
+    final static String APIURL = "https://srv-iot.diatel.upm.es";
+
+    private Retrofit retrofit;
+
+    private String userToken = "";
+
+
+    public NotificationClass(Context context,String userToken) {
+        this.userToken = userToken;
         this.contextoGlobal = context.getApplicationContext();
+
+        Log.d(NOTIFICATION_MSG,"userToken: " + userToken);
     }
 
     @Override
@@ -30,11 +58,19 @@ public class NotificationClass implements Runnable{
 
         CreateNotificationChannel();
 
+        //retrofit obj
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APIURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         while(true){
 
             try {
                 showNotification("New notification");
                 Log.d(NOTIFICATION_MSG,"notification background thread running now!");
+                userGetAlarmsData();
                 Thread.sleep(3000);
 
             } catch (InterruptedException e) {
@@ -46,7 +82,6 @@ public class NotificationClass implements Runnable{
 
     }
 
-    // Método para crear el canal de notificación
     public void CreateNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String idCanal = "1234";
@@ -67,7 +102,7 @@ public class NotificationClass implements Runnable{
         }
     }
 
-    // Método para mostrar la notificación
+
     public void showNotification(String notificationContent) {
         String idCanal = "1234";
         int idNotificacion = 2;
@@ -93,9 +128,62 @@ public class NotificationClass implements Runnable{
         manager.notify(idNotificacion, builder.build());
     }
 
-    // Método para pedir permisos a la actividad (delegado desde la actividad)
+
     public void requestNotificationPermission(Activity activity) {
         ActivityCompat.requestPermissions(activity,
                 new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
     }
+
+
+    private void userGetAlarmsData() {
+
+        ThingsBoardAlarms alarmsInterface = retrofit.create(ThingsBoardAlarms.class);
+        alarmsInterface.GetAlarms("Bearer "+ userToken).enqueue(new Callback<List<alarmDataEntry>>() {
+            @Override
+            public void onResponse(Call<List<alarmDataEntry>> call, Response<List<alarmDataEntry>> response) {
+
+                try {
+
+                    if (response.code() == 200) { //OK
+
+                        Log.d(NOTIFICATION_MSG, response.body().toString());
+
+
+                        //JSONArray data = new JSONArray(str);
+
+                        Log.d(NOTIFICATION_MSG, "simulated data OK ");
+
+                        //Getting rain parameter
+
+                        List<alarmDataEntry> data = response.body();
+
+                        for (alarmDataEntry entry : data) {
+                            Log.d(NOTIFICATION_MSG, "Alarm name -> " + entry.getKey());
+                            Log.d(NOTIFICATION_MSG,"Hot alarm status -> " + entry.isValue());
+                        }
+
+                       //checkear alarms
+
+
+                    } else if (response.code() == 401){//Unauthorired
+
+                        //ToDo: request user token because has expired
+
+                        Log.d(NOTIFICATION_MSG,"ERROR -> " + response);
+
+                    }
+
+                } catch (Exception e) {
+                    Log.d(NOTIFICATION_MSG, "Response excepcion : " + e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<alarmDataEntry>> call, Throwable throwable) {
+                Log.d(NOTIFICATION_MSG, "Error response from API -> " + throwable.getMessage().toString());
+            }
+        });
+
+    }
+
 }

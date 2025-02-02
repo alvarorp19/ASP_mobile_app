@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
     String userToken = "";
     String userRefreshToken = "";
 
-    private Thread notificationThread;
-
 
     public interface requestUser {
 
@@ -125,15 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //creating notification thread on background
 
-        notificationThread = new Thread(new NotificationClass(this));
-        notificationThread.start();
-
-
-        //create notification channel
-        CreateNotificationChannel();
-        showNotification("Testing notifications");
     }
 
     @Override
@@ -192,51 +182,51 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void CreateNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String idCanal = "1234";
-            CharSequence nombre = "AlarmChannel";
-            String descripcion = "Channel for alarms notification";
-            int importancia = NotificationManager.IMPORTANCE_DEFAULT;
-
-            NotificationChannel canal = new NotificationChannel(idCanal, nombre, importancia);
-            canal.setDescription(descripcion);
-
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            if (manager != null) {
-                manager.createNotificationChannel(canal);
-                Log.d(MAINACTIVITYTAG, "Notification channel created!");
-            }
-        } else {
-            Log.d(MAINACTIVITYTAG, "Unable to create the notification channel!");
-        }
-
-    }
-
-    public void showNotification(String notificationContent) {
-        String idCanal = "1234";
-        int idNotificacion = 2;
-
-        Context contextoGlobal = getApplicationContext();
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, idCanal)
-                .setSmallIcon(R.drawable.rover_icon)
-                .setContentTitle("¡New Alarm!")
-                .setContentText(notificationContent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat manager = NotificationManagerCompat.from(this);
-
-
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
-            return; // No continúes si el permiso no está concedido
-        }
-
-        Log.d(MAINACTIVITYTAG, "showing notification!");
-        manager.notify(idNotificacion, builder.build());
-    }
+//    public void CreateNotificationChannel() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            String idCanal = "1234";
+//            CharSequence nombre = "AlarmChannel";
+//            String descripcion = "Channel for alarms notification";
+//            int importancia = NotificationManager.IMPORTANCE_DEFAULT;
+//
+//            NotificationChannel canal = new NotificationChannel(idCanal, nombre, importancia);
+//            canal.setDescription(descripcion);
+//
+//            NotificationManager manager = getSystemService(NotificationManager.class);
+//            if (manager != null) {
+//                manager.createNotificationChannel(canal);
+//                Log.d(MAINACTIVITYTAG, "Notification channel created!");
+//            }
+//        } else {
+//            Log.d(MAINACTIVITYTAG, "Unable to create the notification channel!");
+//        }
+//
+//    }
+//
+//    public void showNotification(String notificationContent) {
+//        String idCanal = "1234";
+//        int idNotificacion = 2;
+//
+//        Context contextoGlobal = getApplicationContext();
+//
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, idCanal)
+//                .setSmallIcon(R.drawable.rover_icon)
+//                .setContentTitle("¡New Alarm!")
+//                .setContentText(notificationContent)
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//        NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+//
+//
+//        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
+//            return; // No continúes si el permiso no está concedido
+//        }
+//
+//        Log.d(MAINACTIVITYTAG, "showing notification!");
+//        manager.notify(idNotificacion, builder.build());
+//    }
 
 }
