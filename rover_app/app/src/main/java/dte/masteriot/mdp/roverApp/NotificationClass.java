@@ -121,7 +121,7 @@ public class NotificationClass implements Runnable{
 
     public void showNotification(String notificationContent) {
         String idCanal = "1234";
-        int idNotificacion = 2;
+        int idNotificacion = (int) System.currentTimeMillis();
 
         //Intent to show the notification on the user's screen
 
