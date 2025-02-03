@@ -1,8 +1,12 @@
 package dte.masteriot.mdp.roverApp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +40,13 @@ public class SecondActivity extends AppCompatActivity{
         userToken = inputIntent.getStringExtra(EXTRA_INFO_ACTIVITY_USER_TOKEN);
 
         Log.d(SECOND_ACTIVITY_TAG, "User token -> " + userToken);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+//                    != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
+//            }
+//        }
 
 
         //buttons initialization
