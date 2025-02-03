@@ -160,8 +160,6 @@ public class ThirdActivity extends AppCompatActivity {
 
                     //Log.d(THIRD_ACTIVITY_TAG,"direction ->" + currentDirection);
 
-                    //ToDo: revisar esta parte del código
-
                     if(currentDirection != lastDirection){
                         lastDirection = currentDirection;
 

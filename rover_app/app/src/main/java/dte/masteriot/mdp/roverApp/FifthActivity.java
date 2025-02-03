@@ -143,10 +143,9 @@ public class FifthActivity extends AppCompatActivity {
                         bannerText.setText("AT " + TelemetryEntry.unixTimeToDateTime(timestamp));
 
 
+                    } else if (response.code() == 401){//Unauthorized
 
-                    } else if (response.code() == 401){//Unauthorired
-
-                        //ToDo: request user token because has expired
+                        Log.d(FIFTH_ACTIVITY_TAG, "Unauthorized ");
 
                     }
 

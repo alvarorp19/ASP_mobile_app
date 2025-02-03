@@ -238,11 +238,10 @@ public class FourthActivity extends AppCompatActivity{
 
 
 
-                    } else if (response.code() == 401){//Unauthorired
+                    } else if (response.code() == 401){//Unauthorized
 
-                        //ToDo: request user token because has expired
 
-                        Log.d(FOURTH_ACTIVITY_TAG, "ERROR 401: ");
+                        Log.d(FOURTH_ACTIVITY_TAG, "ERROR 401");
 
                     }
 

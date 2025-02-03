@@ -183,8 +183,6 @@ public class NotificationClass implements Runnable{
 
                     } else if (response.code() == 401){//Unauthorired
 
-                        //ToDo: request user token because has expired
-
                         Log.d(NOTIFICATION_MSG,"ERROR -> " + response);
 
                     }
